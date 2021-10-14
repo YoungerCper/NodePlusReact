@@ -28,15 +28,14 @@ router.post('/register', async(req, res) => {
 router.post('/login', async(req, res) => {
     try{
         const {login, password} = req.body;
-
         const candidate = await User.findOne({login});
 
         if(!candidate) return res.status(400).json({message: "Неверный логин или пароль"});
         if(candidate.password != password) return res.status(400).json({message: "Неверный логин или пароль"});
 
-        const token = jwt.sign({userId: candidate.id}, config.get("jwtSecret"), {expiresIn: '1h'});
+        const token = jwt.sign({userId: candidate._id}, config.get("jwtSecret"), {expiresIn: '1h'});
 
-        res.json({token, userId: candidate.id, name: candidate.name, second_name: candidate.second_name});
+        res.json({token, userId: candidate._id, name: candidate.name, second_name: candidate.second_name});
     }
     catch(e){
         res.status(500).json({message: "Что-то пошло не так((("});

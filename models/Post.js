@@ -5,7 +5,7 @@ const schema = new Schema({
     text: {type: String, required: true},
     tags:{type : Array , "default" : []},
     id:{type: Types.ObjectId},
-    author:{type: String},
+    author:{type: Types.ObjectId},
     time: {type: String, required: true}
 });
 
